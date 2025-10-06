@@ -1,0 +1,27 @@
+name: Basic Web App
+
+on:
+
+push:
+
+branches:
+
+- main
+
+jobs:
+
+tests:
+
+    runs-on: ubuntu-latest
+
+    name: Run Tests and Lint
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - uses: bahmutov/npm-install@v1
+
+    - run: npm run lint
+
+    - run: npm run test
