@@ -18,9 +18,26 @@ export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("what is your andrew id?")) {
     return "bghimire";
   }
-  
-  if (query.toLowerCase().includes("largest") && query.includes("98") && query.includes("78") && query.includes("3")) {
-    return "98";
+
+  // Handle "largest number" questions using regex
+  const largestMatch = query.match(/largest.*?(\d+)(?:.*?(\d+))*(?:.*?(\d+))*/i);
+  if (largestMatch) {
+    // Extract all numbers from the query
+    const numbers = query.match(/\d+/g);
+    if (numbers && numbers.length >= 2) {
+      const numericValues = numbers.map(num => parseInt(num, 10));
+      const largest = Math.max(...numericValues);
+      return largest.toString();
+    }
+  }
+
+  // Handle addition questions using regex
+  const additionMatch = query.match(/what is (\d+) plus (\d+)/i);
+  if (additionMatch) {
+    const num1 = parseInt(additionMatch[1], 10);
+    const num2 = parseInt(additionMatch[2], 10);
+    const sum = num1 + num2;
+    return sum.toString();
   }
 
   return "";
